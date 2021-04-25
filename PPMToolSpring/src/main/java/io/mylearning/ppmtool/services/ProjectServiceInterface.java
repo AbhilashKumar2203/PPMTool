@@ -6,7 +6,9 @@ public interface ProjectServiceInterface {
 	
 	public Project createOrUpdateProject(Project project);
 
-	Project findProjectByProjectId(String projectId); 
+	Project findProjectByProjectId(String projectId);
+
+	Iterable<Project> getAllProjects(); 
 	
 
 }

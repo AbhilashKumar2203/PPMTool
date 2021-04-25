@@ -37,6 +37,11 @@ public class ProjectService implements ProjectServiceInterface {
 		return project;
 		
 	}
+
+	@Override
+	public Iterable<Project> getAllProjects() {
+		return projectRepositories.findAll();
+	}
 	
 	
 
