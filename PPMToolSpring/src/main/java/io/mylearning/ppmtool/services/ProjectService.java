@@ -12,6 +12,7 @@ public class ProjectService implements ProjectServiceInterface {
 	
 	@Autowired
 	private ProjectRepositories projectRepositories;
+	
 
 	@Override
 	public Project createOrUpdateProject(Project p) {
@@ -21,6 +22,19 @@ public class ProjectService implements ProjectServiceInterface {
 		}catch(Exception e) {
 			throw new ProjectIdException("Project Identifier "+p.getProjectIdentifier().toUpperCase()+" already exists");
 		}
+		
+	}
+	
+	@Override
+	public Project findProjectByProjectId(String projectId) {
+		
+		Project project = projectRepositories.findByProjectIdentifier(projectId.toUpperCase());
+		if(project == null) {
+			throw new ProjectIdException("Project does not exist");
+		}
+		
+		
+		return project;
 		
 	}
 	
