@@ -50,6 +50,12 @@ public class ProjectController {
 		
 	}
 	
+	
+	@GetMapping("")
+	public Iterable<Project> getAllProjects(){
+		return projectSerice.getAllProjects();
+	}
+	
 	@GetMapping("/test")
 	public ResponseEntity<String> createProject(){
 		
