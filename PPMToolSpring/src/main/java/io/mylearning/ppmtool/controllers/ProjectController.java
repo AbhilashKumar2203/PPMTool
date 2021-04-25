@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +30,7 @@ public class ProjectController {
 	@Autowired
 	private MapValidationErrorService mapValidationErrorService;
 	
-	@PostMapping("/saveProject")
+	@PostMapping("")
 	public ResponseEntity<?> createProject(@Valid @RequestBody Project p,BindingResult result){
 		
 		ResponseEntity<Map<String,String>> errorMap = mapValidationErrorService.mapValidationError(result);
@@ -37,6 +38,15 @@ public class ProjectController {
 		
 		Project project = projectSerice.createOrUpdateProject(p);
 		return new ResponseEntity<Project>(project,HttpStatus.CREATED);
+		
+	}
+	
+	@GetMapping("/{projectId}")
+	public ResponseEntity<?> getProjectByProjectId(@PathVariable String projectId ){
+		
+		Project project = projectSerice.findProjectByProjectId(projectId);
+		
+		return new ResponseEntity<Project>(project,HttpStatus.OK);
 		
 	}
 	
