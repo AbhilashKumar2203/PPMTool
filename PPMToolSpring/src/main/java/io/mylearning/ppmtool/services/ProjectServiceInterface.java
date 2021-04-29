@@ -8,7 +8,11 @@ public interface ProjectServiceInterface {
 
 	Project findProjectByProjectId(String projectId);
 
-	Iterable<Project> getAllProjects(); 
+	Iterable<Project> getAllProjects();
+
+	void deleteProject(String projectId);
+
+	Project updateProject(Project project); 
 	
 
 }

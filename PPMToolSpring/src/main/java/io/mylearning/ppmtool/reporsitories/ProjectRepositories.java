@@ -8,7 +8,7 @@ import io.mylearning.ppmtool.domain.Project;
 @Repository
 public interface ProjectRepositories extends CrudRepository<Project, Long> {
 	
-	
+
 	Project findByProjectIdentifier(String projectidentifier);
 	
 	
