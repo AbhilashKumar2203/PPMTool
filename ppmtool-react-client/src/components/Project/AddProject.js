@@ -12,7 +12,18 @@ class AddProject extends Component {
       projectDesc: "",
       startDate: "",
       endDate: "",
+      errors: {},
     };
+  }
+
+  comp;
+  //Using this methos to set component state with application state.
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors,
+      });
+    }
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
@@ -24,6 +35,7 @@ class AddProject extends Component {
   };
 
   render() {
+    const { errors } = this.state;
     return (
       <div className="project">
         <div className="container">
@@ -41,7 +53,9 @@ class AddProject extends Component {
                     value={this.state.projectName}
                     onChange={this.onChange}
                   />
+                  <p>{errors.projectName}</p>
                 </div>
+
                 <div className="form-group">
                   <input
                     type="text"
@@ -50,6 +64,7 @@ class AddProject extends Component {
                     name="projectIdentifier"
                     onChange={this.onChange}
                   />
+                  <p>{errors.projectIdentifier}</p>
                 </div>
 
                 <div className="form-group">
@@ -59,7 +74,9 @@ class AddProject extends Component {
                     name="projectDesc"
                     onChange={this.onChange}
                   ></textarea>
+                  <p>{errors.projectDesc}</p>
                 </div>
+
                 <h6>Start Date</h6>
                 <div className="form-group">
                   <input
@@ -95,5 +112,13 @@ class AddProject extends Component {
 
 AddProject.propType = {
   createProject: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
 };
-export default connect(null, { createProject })(AddProject);
+
+//mapStateToProps is used to connect application state available in store to component. SO application state.errors will be available as props(nextProps) in this component.
+const mapStateToProps = (state) => ({
+  errors: state.errors,
+});
+
+//Added mapStateToProps as parameter to connect to make application state values available here in component.
+export default connect(mapStateToProps, { createProject })(AddProject);
