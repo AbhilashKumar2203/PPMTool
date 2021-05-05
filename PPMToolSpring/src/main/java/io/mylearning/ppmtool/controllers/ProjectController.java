@@ -56,6 +56,7 @@ public class ProjectController {
 	
 	
 	@GetMapping("")
+	@CrossOrigin(origins="http://localhost:3000")
 	public Iterable<Project> getAllProjects(){
 		return projectService.getAllProjects();
 	}
