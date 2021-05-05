@@ -46,6 +46,7 @@ public class ProjectController {
 	}
 	
 	@GetMapping("/{projectId}")
+	@CrossOrigin(origins="http://localhost:3000")
 	public ResponseEntity<?> getProjectByProjectId(@PathVariable String projectId ){
 		
 		Project project = projectService.findProjectByProjectId(projectId);
@@ -70,7 +71,7 @@ public class ProjectController {
 	
 	
 	@PutMapping("")
-	
+	@CrossOrigin(origins="http://localhost:3000")
 	public ResponseEntity<?>updateProject(@Valid @RequestBody Project project){
 		Project project1=projectService.updateProject(project);
 		return new ResponseEntity<Project>(project1,HttpStatus.OK);
