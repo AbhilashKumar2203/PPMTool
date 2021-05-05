@@ -1,5 +1,9 @@
 import { bindActionCreators } from "redux";
-import { GET_PROJECTS } from "../actions/type";
+import {
+  GET_PROJECTS,
+  GET_PROJECT_BY_ID,
+  UPDATE_PROJECT,
+} from "../actions/type";
 
 const initialState = {
   projects: [],
@@ -12,6 +16,12 @@ const projectReducer = (state = initialState, action) => {
       return {
         ...state,
         projects: action.payload,
+      };
+
+    case GET_PROJECT_BY_ID:
+      return {
+        ...state,
+        project: action.payload,
       };
 
     default:

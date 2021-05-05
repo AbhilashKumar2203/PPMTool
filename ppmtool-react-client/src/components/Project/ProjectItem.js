@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class ProjectItem extends Component {
   render() {
@@ -24,7 +25,7 @@ export default class ProjectItem extends Component {
                     </i>
                   </li>
                 </a>
-                <a href="#">
+                <Link to={`/updateProject/${project.projectIdentifier}`}>
                   <li className="list-group-item update">
                     <i className="fa fa-edit pr-1">
                       <span style={{ paddingLeft: "10px" }}>
@@ -32,7 +33,7 @@ export default class ProjectItem extends Component {
                       </span>
                     </i>
                   </li>
-                </a>
+                </Link>
                 <a href="">
                   <li className="list-group-item delete">
                     <i className="fa fa-minus-circle pr-1">
