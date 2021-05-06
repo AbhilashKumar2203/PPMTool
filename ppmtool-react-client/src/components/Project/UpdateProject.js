@@ -4,6 +4,8 @@ import {
   updateProject,
 } from "../../actions/createProjectActions";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import classnames from "classnames";
 
 class UpdateProject extends Component {
   constructor() {
@@ -14,6 +16,7 @@ class UpdateProject extends Component {
       projectDesc: "",
       startDate: "",
       endDate: "",
+      errors: {},
     };
   }
 
@@ -33,15 +36,28 @@ class UpdateProject extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("componet will receive props" + nextProps);
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors,
+      });
+    }
     this.setState({
       projectIdentifier: nextProps.selectedProject.projectIdentifier,
       projectName: nextProps.selectedProject.projectName,
       projectDesc: nextProps.selectedProject.projectDesc,
+      startDate: nextProps.selectedProject.startDate,
+      endDate: nextProps.selectedProject.endDate,
     });
   }
   render() {
-    const { projectName, projectIdentifier, projectDesc } = this.state;
+    const {
+      projectName,
+      projectIdentifier,
+      projectDesc,
+      startDate,
+      endDate,
+      errors,
+    } = this.state;
     return (
       <div className="project">
         <div className="container">
@@ -53,12 +69,19 @@ class UpdateProject extends Component {
                 <div className="form-group">
                   <input
                     type="text"
-                    className="form-control form-control-lg "
+                    className={classnames("form-control form-control-lg ", {
+                      "is-invalid": errors.projectName,
+                    })}
                     placeholder="Project Name"
                     value={projectName}
                     name="projectName"
                     onChange={this.onChange}
                   />
+                  {errors.projectName && (
+                    <span className="invalid-feedback">
+                      {errors.projectName}
+                    </span>
+                  )}
                 </div>
                 <div className="form-group">
                   <input
@@ -86,6 +109,7 @@ class UpdateProject extends Component {
                     type="date"
                     className="form-control form-control-lg"
                     name="startDate"
+                    value={startDate}
                     onChange={this.onChange}
                   />
                 </div>
@@ -95,6 +119,7 @@ class UpdateProject extends Component {
                     type="date"
                     className="form-control form-control-lg"
                     name="endDate"
+                    value={endDate}
                     onChange={this.onChange}
                   />
                 </div>
@@ -113,8 +138,15 @@ class UpdateProject extends Component {
   }
 }
 
+UpdateProject.propTypes = {
+  getProjectById: PropTypes.func.isRequired,
+  updateProject: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  selectedProject: PropTypes.object.isRequired,
+};
 const mapStateToProps = (state) => ({
   selectedProject: state.projects.project,
+  errors: state.errors,
 });
 export default connect(mapStateToProps, { getProjectById, updateProject })(
   UpdateProject

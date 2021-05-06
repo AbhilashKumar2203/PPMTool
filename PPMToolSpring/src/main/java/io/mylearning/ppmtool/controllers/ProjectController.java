@@ -72,8 +72,11 @@ public class ProjectController {
 	
 	@PutMapping("")
 	@CrossOrigin(origins="http://localhost:3000")
-	public ResponseEntity<?>updateProject(@Valid @RequestBody Project project){
+	public ResponseEntity<?>updateProject(@Valid @RequestBody Project project,BindingResult result){
+		ResponseEntity<Map<String,String>> errorMap = mapValidationErrorService.mapValidationError(result);
+		if(errorMap != null) return errorMap;
 		Project project1=projectService.updateProject(project);
+		
 		return new ResponseEntity<Project>(project1,HttpStatus.OK);
 	}
 	@GetMapping("/test")
