@@ -31,7 +31,7 @@ public class Project {
 	@JsonFormat(pattern="yyyy-mm-dd")
 	private Date startDate;
 	@JsonFormat(pattern="yyyy-mm-dd")
-	private Date enddate;
+	private Date endDate;
 	@JsonFormat(pattern="yyyy-mm-dd")
 	private Date createdAt;
 	@JsonFormat(pattern="yyyy-mm-dd")
@@ -81,12 +81,15 @@ public class Project {
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-	public Date getEnddate() {
-		return enddate;
+	
+	public Date getEndDate() {
+		return endDate;
 	}
-	public void setEnddate(Date enddate) {
-		this.enddate = enddate;
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
+
 	public Date getCreatedAt() {
 		return createdAt;
 	}
