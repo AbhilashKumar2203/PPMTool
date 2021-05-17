@@ -3,8 +3,10 @@ package io.mylearning.ppmtool.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import io.mylearning.ppmtool.domain.Backlog;
 import io.mylearning.ppmtool.domain.Project;
 import io.mylearning.ppmtool.exceptions.ProjectIdException;
+import io.mylearning.ppmtool.reporsitories.BacklogRepositories;
 import io.mylearning.ppmtool.reporsitories.ProjectRepositories;
 
 @Service
@@ -12,12 +14,21 @@ public class ProjectService implements ProjectServiceInterface {
 
 	@Autowired
 	private ProjectRepositories projectRepositories;
+	
+	@Autowired
+	private BacklogRepositories backlogRepository;
 
 
 	@Override
 	public Project createOrUpdateProject(Project p) {
 		try {
 			p.setProjectIdentifier(p.getProjectIdentifier().toUpperCase());
+			if((Long)p.getId()== 0) {
+				Backlog bl= new Backlog();
+				p.setBacklog(bl);
+				bl.setProject(p);
+				bl.setProjectIdentifier(p.getProjectIdentifier().toUpperCase());
+			}
 			return projectRepositories.save(p);
 		}catch(Exception e) {
 			throw new ProjectIdException("Project Identifier "+p.getProjectIdentifier().toUpperCase()+" already exists");
@@ -62,6 +73,9 @@ public class ProjectService implements ProjectServiceInterface {
 	public Project updateProject(Project project) {
 		
 		Project project1= projectRepositories.findByProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+		if(project.getId()!=0) {
+			project.setBacklog(backlogRepository.findByProjectIdentifier(project.getProjectIdentifier().toUpperCase()));
+		}
 		if(project1 == null) {
 			throw new ProjectIdException("Project with id "+ project.getProjectIdentifier().toUpperCase()+" is not present");
 		}else {

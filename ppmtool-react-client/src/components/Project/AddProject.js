@@ -17,7 +17,6 @@ class AddProject extends Component {
     };
   }
 
-  comp;
   //Using this methos to set component state with application state.
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {

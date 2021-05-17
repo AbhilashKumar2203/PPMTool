@@ -63,7 +63,7 @@ public class ProjectController {
 	}
 	
 	@DeleteMapping("/{projectId}")
-	
+	@CrossOrigin(origins="http://localhost:3000")
 	public ResponseEntity<?>deleteProject(@PathVariable String projectId){
 		projectService.deleteProject(projectId);
 		return new ResponseEntity<String>("Project with id "+projectId+" Deleted Successfully",HttpStatus.OK);
